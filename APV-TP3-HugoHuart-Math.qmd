@@ -1,0 +1,90 @@
+---
+title: "APV - TP3 : MLE"
+author: "Hugo Huart"
+pdf-engine: xelatex
+format:
+    pdf:
+        mainfont: Helvetica
+        fontsize: 14pt
+        geometry:
+            - margin=2cm
+---
+
+# Exercice 1 : MLE dans le cas discret
+
+## 1.
+
+Étant donné qu'un allèle ne peut prendre que les valeurs $a$ ou $A$,
+on a $p(A) = \theta$ et $p(a) = 1 - \theta$.
+
+Pour chaque génotype on a donc :
+
+$$
+P[Y] =
+\begin{cases}
+    p(A) \cdot p(A),&\text{ si Y = $AA$} \\
+    2 \cdot p(A) \cdot p(a),&\text{ si Y = $Aa$} \\
+    p(a) \cdot p(a),&\text{ si Y = $aa$}
+\end{cases}
+$$
+
+soit,
+
+$$
+P[Y] =  
+\begin{cases}
+    \theta^2,&\text{ si Y = $AA$} \\
+    -2\theta^2 + 2\theta,&\text{ si Y = $Aa$} \\
+    \theta^2 - 2\theta + 1,&\text{ si Y = $aa$}
+\end{cases}
+$$
+
+qui est la loi de probabilité de $Y$ en fonction de $\theta$.
+
+## 2.
+
+On sait que la valeur de vraisemblance, avec $n$ observations, est donné par: 
+
+$$
+L(x_1,\dots,x_n|\theta) = \prod_{i=1}^{n}p(x_i|\theta)
+$$
+
+Dans notre cas, on a $N_1 + N_2 + N_3 = n$ observations avec $N_1$ cas où $Y=AA$,
+$N_2$ cas où $Y = Aa$ et $N_3$ cas où $Y = aa$, on a donc comme vraissemblance :
+
+$$
+L(\theta) = P[Y = AA]^{N_1} \cdot P[Y = Aa]^{N_2} \cdot P[Y=aa]^{N_3} 
+$$
+
+dont le développement vaut :
+
+$$
+L(\theta) = (\theta^2)^{N_1} * (-2\theta^2 + 2\theta)^{N_2} * (\theta^2 - 2\theta + 1)^{N_3}
+$$
+
+En sachant que $\arg\max(L(\theta)) = \arg\max(\ln(L(\theta)))$, on détermine $\ln(L(\theta))$ :
+
+$$
+\ln(L(\theta)) = N_1 \cdot \ln(\theta^2) + N_2 \cdot \ln(-2\theta^2 + 2\theta)
++ N_3 \cdot \ln(\theta^2 - 2\theta + 1)
+$$
+
+Maintenant, afin de trouver le maximum de cette fonction, on peut établir une équation
+avec la dérivée partielle de celle-ci par rapport à $\theta$ qui doit valoir 0:
+
+$$
+\frac{\partial L}{\partial\theta} = \frac{2N_1}{t} + \frac{N_2 (2 - 4t)}{2t - 2 t^2}+\frac{N_3 (2t - 2)}{t^2 - 2t + 1} = 0
+$$
+
+Ce qui donne, en résolvant pour $\theta$:
+
+$$
+\theta = \frac{2N_1 + N_2}{2 \cdot (N_1 + N_2 + N_3)}
+$$
+
+# Exercice 2 - MLE dans le cas discret
+
+$$
+
+$$
+
