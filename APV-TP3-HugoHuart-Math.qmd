@@ -4,7 +4,6 @@ author: "Hugo Huart"
 pdf-engine: xelatex
 format:
     pdf:
-        mainfont: Helvetica
         fontsize: 14pt
         geometry:
             - margin=2cm
@@ -43,14 +42,14 @@ qui est la loi de probabilité de $Y$ en fonction de $\theta$.
 
 ## 2.
 
-On sait que la valeur de vraisemblance, avec $n$ observations, est donné par: 
+On sait que la valeur de vraisemblance, avec $n$ observations, est donné par : 
 
 $$
 L(x_1,\dots,x_n|\theta) = \prod_{i=1}^{n}p(x_i|\theta)
 $$
 
 Dans notre cas, on a $N_1 + N_2 + N_3 = n$ observations avec $N_1$ cas où $Y=AA$,
-$N_2$ cas où $Y = Aa$ et $N_3$ cas où $Y = aa$, on a donc comme vraissemblance :
+$N_2$ cas où $Y = Aa$ et $N_3$ cas où $Y = aa$, on a donc comme vraisemblance :
 
 $$
 L(\theta) = P[Y = AA]^{N_1} \cdot P[Y = Aa]^{N_2} \cdot P[Y=aa]^{N_3} 
@@ -70,21 +69,77 @@ $$
 $$
 
 Maintenant, afin de trouver le maximum de cette fonction, on peut établir une équation
-avec la dérivée partielle de celle-ci par rapport à $\theta$ qui doit valoir 0:
+avec la dérivée partielle de celle-ci par rapport à $\theta$ qui doit être égale à 0 :
 
 $$
-\frac{\partial L}{\partial\theta} = \frac{2N_1}{t} + \frac{N_2 (2 - 4t)}{2t - 2 t^2}+\frac{N_3 (2t - 2)}{t^2 - 2t + 1} = 0
+\frac{\partial}{\partial\theta} = \frac{2N_1}{\theta} + \frac{N_2 (2 - 4\theta)}{2\theta - 2 \theta^2}+\frac{N_3 (2\theta - 2)}{\theta^2 - 2\theta + 1} = 0
 $$
 
-Ce qui donne, en résolvant pour $\theta$:
+Ce qui donne, en résolvant pour $\theta$ :
 
 $$
 \theta = \frac{2N_1 + N_2}{2 \cdot (N_1 + N_2 + N_3)}
 $$
 
+qui est le MLE de $\theta$.
+
+\pagebreak
 # Exercice 2 - MLE dans le cas discret
 
-$$
+Avec une seule observation $x$, il y a 3 possibilités, une par valeur de la variable aléatoire.
+On va donc calculer le MLE pour chacun de ces cas,
+ce dernier vaudra $\arg\max(P[X=i])$ avec $P[X=i]$ borné par $[0;1/2]$.
+
+## Cas $X=0$
+
+On a :
 
 $$
+L(\theta) = 6\theta^2 - 4\theta + 1
+$$
 
+Étant donné qu'il s'agit d'une fonction quadratique et que le coefficient de $\theta^2$ est positif,
+la fonction est convexe. Cela signifie que la valeur maximale de la fonction dans l'intervalle
+se situe forcément à l'une des bornes. On a donc :
+
+$$
+L(0) =  1 \text{ et } L(1/2) = 1/2
+$$
+
+Le MLE de $\theta$ vaut donc 0.
+
+## Cas $X=1$
+
+On a :
+
+$$
+L(\theta) = \theta - 2\theta^2
+$$
+
+Il s'agit encore une fois d'une fonction quadratique mais cette fois-ci de
+coefficient négatif pour $\theta^2$. Cela signifie qu'elle est concave, et que le maximum se situe
+entre les bornes. Afin de trouver la valeur maximum, on détermine une équation avec sa dérivée
+devant être égale à 0 :
+
+$$
+\frac{d}{d\theta} L(\theta) = -4\theta + 1 = 0
+$$
+
+Le MLE de $\theta$ vaut donc $1/4$.
+
+## Cas $X=2$
+
+On a :
+
+$$
+L(\theta) = 3\theta - 4\theta^2
+$$
+
+C'est une fonction quadratique concave.
+On détermine encore une fois équation où la dérivée de $L(\theta)$ vaut 0, ce qui donne :
+
+$$
+\frac{d}{d\theta} L{\theta} = 3 - 8\theta = 0
+$$
+
+LE MLE de $\theta$ vaut donc 3/8.
