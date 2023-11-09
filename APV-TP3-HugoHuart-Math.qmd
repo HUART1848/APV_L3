@@ -4,7 +4,7 @@ author: "Hugo Huart"
 pdf-engine: xelatex
 format:
     pdf:
-        fontsize: 14pt
+        fontsize: 12pt
         geometry:
             - left=2cm
             - right=2cm
@@ -89,7 +89,7 @@ qui est le MLE de $\theta$.
 
 Avec une seule observation $x$, il y a 3 cas de figure,
 un par valeur possible de la variable aléatoire. On va donc calculer le MLE pour chacun de ces cas,
-soit $\arg\max(P[X=i])$ avec $P[X=i]$ borné par $[0;1/2]$ pour $i \in \{0,1,2\}$.
+soit $\arg\max(P[X=i])$ avec $P[X=i]$ pour $i \in \{0,1,2\}$.
 
 ## Cas $X=0$
 
@@ -117,10 +117,9 @@ $$
 L(\theta) = \theta - 2\theta^2
 $$
 
-Il s'agit encore une fois d'une fonction quadratique mais cette fois-ci il y a
+Il s'agit encore une fois d'une fonction quadratique mais cette fois-ci il y a un
 coefficient négatif pour $\theta^2$. Cela signifie qu'elle est concave, et que le maximum se situe
-entre les bornes. Afin de trouver la valeur maximum, on détermine une équation avec sa dérivée
-devant être égale à 0 :
+entre les bornes. Afin de trouver la valeur maximum, on détermine une équation avec la dérivée de $L(\theta)$ devant être égale à 0 :
 
 $$
 \frac{d}{d\theta} L(\theta) = -4\theta + 1 = 0
@@ -143,7 +142,7 @@ $$
 \frac{d}{d\theta} L{\theta} = 3 - 8\theta = 0
 $$
 
-LE MLE de $\theta$ vaut donc 3/8.
+Le MLE de $\theta$ vaut donc 3/8.
 
 \pagebreak
 # Exercice 3 : MLE dans le cas continu
@@ -161,14 +160,123 @@ $$
 f(x) = \frac{1}{2\lambda\sqrt{x}}\exp(-\frac{\sqrt{x}}{\lambda})
 $$
 
-On a donc :
+Étant donné que la fonction de densité est nulle si $x$ est négatif ou égal à 0, les $X_1,\dots,X_n$ sont forcéments strictement positifs, on a donc :
 
 $$
-L(\lambda) = \prod_{i=1}^{n}\frac{1}{2\lambda\sqrt{x_i}}\exp(-\frac{\sqrt{x_i}}{\lambda})
+L(\lambda) = \prod_{i=1}^{n}(\frac{1}{2\lambda\sqrt{x_i}}\exp(-\frac{\sqrt{x_i}}{\lambda}))
+$$
+
+que l'on peut simplifier en :
+
+$$
+L(\lambda) = \prod_{i=1}^{n}\frac{1}{2\lambda \sqrt{x_i}} \cdot \exp(\sum_{i=1}^{n}\frac{-\sqrt{x_i}}{\lambda})
 $$
 
 En sachant que $\arg\max(\ln{(L(\theta))}) = \arg\max(L(\theta))$, on a :
 
 $$
-\ln{(L(\theta))} = \sum_{i=1}^{n}(\ln{(\frac{1}{2\lambda\sqrt{x_i}})}-\frac{\sqrt{x_i}}{\lambda})
+\ln(L(\lambda)) = ln(\prod_{i=1}^{n}\frac{1}{2\lambda \sqrt{x_i}} \cdot \exp(\sum_{i=1}^{n}\frac{-\sqrt{x_i}}{\lambda}))
 $$
+
+que l'on peut simplifier en :
+
+$$
+\ln(L(\lambda)) = \sum_{i=1}^{n}\ln(\frac{1}{2\lambda \sqrt{x_i}}) - \sum_{i=1}^{n}\frac{\sqrt{x_i}}{\lambda}
+$$
+
+Afin de maximiser cette fonction, on va établir une équation avec la dérivée partielle de celle-ci par rapport à $\lambda$ valant 0 :
+
+$$
+\frac{\partial}{\partial\lambda}\ln(L(\lambda)) = -\sum _{i=1}^n -\frac{\sqrt{x_i}}{\lambda^2}-\frac{n}{\lambda} = 0
+$$
+
+La solution de celle-ci est donc notre MLE pour $\lambda$.
+
+## 2.
+
+On a la fonction de densité $f(x)$ : 
+
+$$
+f(x) =
+\begin{cases}
+\frac{1}{b},\text{ si }x \in [0, b] \\
+0,\text{ sinon}
+\end{cases}
+$$
+
+Étant donné que les observations $X_1,\dots,X_n$ sont indépendantes, identiquement distribuées, et ayant des valeurs situées entre 0 et $b$ au vu de la 
+fonction de densité. On a une vraisemblance :
+
+$$
+L(b) = \prod_{i=1}^{n}f(X_1,\dots,X_n|b) = \prod_{i=1}^{n}\frac{1}{b} = b^{-n}
+$$
+
+Étant donné que la fonction $b^{-n}$ est décroissante de $b=0$ à $b=+\infty$ et que respectivement $\lim_{b\to 0}b^{-n} = +\infty$
+et $\lim_{b \to +\infty}b^{-n} = 0$ pour un $n$ positif (ce qui est forcément le cas ici), le MLE de $b$ vaut donc $\min(X_1,\dots,X_n)$.
+
+\pagebreak
+# Exercice 4 : MLE et moment
+
+## 1.
+
+Tout d'abord, on sait que l'espérance d'une variable aléatoire continue de fonction de densité $f(x)$ est donnée par  :
+
+$$
+E[X] = \int_{-\infty}^{+\infty}xf(x)dx
+$$
+
+En l'appliquant à notre fonction de densité :
+
+$$
+f(x) =
+\begin{cases}
+3\theta^3 x^{-4},\text{ si } x \geq \theta \\
+0,\text{ sinon}
+\end{cases}
+$$
+
+on peut trouver l'espérance :
+
+$$
+E[X] = \int_{-\infty}^{\theta}0dx + \int_{\theta}^{+\infty}3\theta^{2}x^{-3}dx = \frac{3}{2}\theta
+$$
+
+On sait également qu'avec $n$ échantillons $X_1,\dots,X_n$ issus de cette variable aléatoire on a :
+
+$$
+E[X] = \frac{1}{n} \sum_{i=1}^{n}x_i = \overline{x}
+$$
+
+avec $\overline{x}$ la moyenne des $X_1,\dots,X_n$. On peut donc mettre en place l'équation suivante :
+
+$$
+E[X] = \frac{3}{2}\theta = \overline{x}
+$$
+
+En résolvant pour $\theta$, on a $\theta = \frac{2}{3}\overline{x}$ soit l'estimation de $\theta$ par la méthode des moments.
+
+## 2
+
+Étant donné que les observations $X_1,\dots,X_n$ sont indépendantes, identiquement distribuées,
+on a une fonction de vraisemblance :
+
+$$
+L(\theta) = \prod_{i=1}^{n}3\theta^3x_{i}^{-4} = 3^n\theta^{3n}(\prod_{i=1}^{n}x_i)^{-4}
+$$
+
+pour $\forall x_i \geq \theta$, ce qui est le cas de tout $x_i$ vu que la fonction de densité est nulle autrement.
+En sachant que $\arg\max(L(\theta)) = \arg\max(\ln(L(\theta)))$ on a :
+
+$$
+\ln(L(\theta)) = \ln(3^n\theta^{3n}(\prod_{i=1}^{n}x_i)^{-4}) = \ln(L(\theta)) = n\ln(3) + 3n\ln(\theta) - 4\sum_{i=1}^{n}\ln(x_i)
+$$
+
+Afin de trouver le maximum de cette fonction, on essaye d'établir une équation
+avec la dérivée partielle de celle-ci par rapport à $\theta$ devant valoir 0 :
+
+$$
+\frac{\partial}{\partial\theta}\ln(L(\theta)) = \frac{3n}{\theta} = 0
+$$
+
+Cela nécéssite que $\theta$ se rapproche de $+\infty$. On aimerait donc que $\theta$ soit le plus grand possible.
+Étant donné que chaque échantillon $X_1,\dots,X_n$ est au moins plus grand où égal à $\theta$, on a $\min(X_1,\dots,X_n)$ comme MLE de $\theta$.
