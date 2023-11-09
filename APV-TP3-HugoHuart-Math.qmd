@@ -147,6 +147,8 @@ Le MLE de $\theta$ vaut donc 3/8.
 \pagebreak
 # Exercice 3 : MLE dans le cas continu
 
+## 1.
+
 Étant donné que les observations $X_1,\dots,X_n$ sont indépendantes et identiquement distribuées,
 on a une vraisemblance :
 
@@ -255,7 +257,7 @@ $$
 
 En résolvant pour $\theta$, on a $\theta = \frac{2}{3}\overline{x}$ soit l'estimation de $\theta$ par la méthode des moments.
 
-## 2
+## 2.
 
 Étant donné que les observations $X_1,\dots,X_n$ sont indépendantes, identiquement distribuées,
 on a une fonction de vraisemblance :
